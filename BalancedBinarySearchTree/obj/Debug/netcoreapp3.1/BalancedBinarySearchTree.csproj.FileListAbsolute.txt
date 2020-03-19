@@ -1,0 +1,11 @@
+C:\Users\dell\source\repos\BalancedBinarySearchTree\BalancedBinarySearchTree\bin\Debug\netcoreapp3.1\BalancedBinarySearchTree.exe
+C:\Users\dell\source\repos\BalancedBinarySearchTree\BalancedBinarySearchTree\bin\Debug\netcoreapp3.1\BalancedBinarySearchTree.deps.json
+C:\Users\dell\source\repos\BalancedBinarySearchTree\BalancedBinarySearchTree\bin\Debug\netcoreapp3.1\BalancedBinarySearchTree.runtimeconfig.json
+C:\Users\dell\source\repos\BalancedBinarySearchTree\BalancedBinarySearchTree\bin\Debug\netcoreapp3.1\BalancedBinarySearchTree.runtimeconfig.dev.json
+C:\Users\dell\source\repos\BalancedBinarySearchTree\BalancedBinarySearchTree\bin\Debug\netcoreapp3.1\BalancedBinarySearchTree.dll
+C:\Users\dell\source\repos\BalancedBinarySearchTree\BalancedBinarySearchTree\bin\Debug\netcoreapp3.1\BalancedBinarySearchTree.pdb
+C:\Users\dell\source\repos\BalancedBinarySearchTree\BalancedBinarySearchTree\obj\Debug\netcoreapp3.1\BalancedBinarySearchTree.csprojAssemblyReference.cache
+C:\Users\dell\source\repos\BalancedBinarySearchTree\BalancedBinarySearchTree\obj\Debug\netcoreapp3.1\BalancedBinarySearchTree.AssemblyInfoInputs.cache
+C:\Users\dell\source\repos\BalancedBinarySearchTree\BalancedBinarySearchTree\obj\Debug\netcoreapp3.1\BalancedBinarySearchTree.AssemblyInfo.cs
+C:\Users\dell\source\repos\BalancedBinarySearchTree\BalancedBinarySearchTree\obj\Debug\netcoreapp3.1\BalancedBinarySearchTree.dll
+C:\Users\dell\source\repos\BalancedBinarySearchTree\BalancedBinarySearchTree\obj\Debug\netcoreapp3.1\BalancedBinarySearchTree.pdb
