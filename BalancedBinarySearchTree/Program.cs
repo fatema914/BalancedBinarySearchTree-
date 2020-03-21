@@ -8,65 +8,65 @@ namespace BinarySearchTree
         public int height;
         public Node leftNode;
         public Node rigntNode;
-        public Node InsertNode(Node bstObj, int data)
+        public Node InsertNode(Node node, int data)
         {
-            if (bstObj.nodeValue == 0)
+            if (node.nodeValue == 0)
             {
-                bstObj.nodeValue = data;
-                bstObj.height = 1;
+                node.nodeValue = data;
+                node.height = 1;
             }
-            else if (data < bstObj.nodeValue)
+            else if (data < node.nodeValue)
             {
-                if (bstObj.leftNode == null)
+                if (node.leftNode == null)
                 {
-                    bstObj.leftNode = new Node();
-                    bstObj.leftNode.nodeValue = data;
-                    bstObj.leftNode.height = 1;
+                    node.leftNode = new Node();
+                    node.leftNode.nodeValue = data;
+                    node.leftNode.height = 1;
                 }
                 else
                 {
-                    bstObj.leftNode = InsertNode(bstObj.leftNode, data);
+                    node.leftNode = InsertNode(node.leftNode, data);
                 }
             }
             else
             {
-                if (bstObj.rigntNode == null)
+                if (node.rigntNode == null)
                 {
-                    bstObj.rigntNode = new Node();
-                    bstObj.rigntNode.nodeValue = data;
-                    bstObj.rigntNode.height = 1;
+                    node.rigntNode = new Node();
+                    node.rigntNode.nodeValue = data;
+                    node.rigntNode.height = 1;
                 }
                 else
                 {
-                    bstObj.rigntNode = InsertNode(bstObj.rigntNode, data);
+                    node.rigntNode = InsertNode(node.rigntNode, data);
                 }
             }
             //Calculate left and right height of each node
-            bstObj = bstObj.Getheight(bstObj);
+            node = node.Getheight(node);
             //Calculate Is balancing needed of each node
-            int balanceFactor = bstObj.GetBalanceFactor(bstObj);
+            int balanceFactor = node.GetBalanceFactor(node);
 
             if (balanceFactor > 1)
             {
-                if (data < bstObj.leftNode.nodeValue)
+                if (data < node.leftNode.nodeValue)
                 {
-                    bstObj = bstObj.LeftBalanceing(bstObj);
+                    node = node.LeftBalanceing(node);
                 }
-                if (data > bstObj.rigntNode.nodeValue)
+                if (data > node.rigntNode.nodeValue)
                 {
-                    bstObj = bstObj.LeftRightBalancing(bstObj);
+                    node = node.LeftRightBalancing(node);
                 }
             }
             else if (balanceFactor < -1)
             {
-                if (data > bstObj.rigntNode.nodeValue)
+                if (data > node.rigntNode.nodeValue)
                 {
-                    bstObj = bstObj.RightBalanceing(bstObj);
+                    node = node.RightBalanceing(node);
                 }
                 else
-                    bstObj = bstObj.RightLeftBalancing(bstObj);
+                    node = node.RightLeftBalancing(node);
             }
-            return bstObj;
+            return node;
         }
         public int GetBalanceFactor(Node node)
         {
@@ -85,35 +85,35 @@ namespace BinarySearchTree
             }
             return isBalance;
         }
-        public Node Getheight(Node bstObj)
+        public Node Getheight(Node node)
         {
-            if (bstObj.leftNode != null && bstObj.rigntNode == null)
+            if (node.leftNode != null && node.rigntNode == null)
             {
-                bstObj.height = bstObj.leftNode.height + 1;
+                node.height = node.leftNode.height + 1;
             }
-            else if (bstObj.leftNode != null && bstObj.rigntNode != null)
+            else if (node.leftNode != null && node.rigntNode != null)
             {
-                if (bstObj.leftNode.height > bstObj.rigntNode.height)
+                if (node.leftNode.height > node.rigntNode.height)
                 {
-                    bstObj.height = bstObj.leftNode.height + 1;
+                    node.height = node.leftNode.height + 1;
                 }
-                else if (bstObj.leftNode.height < bstObj.rigntNode.height)
+                else if (node.leftNode.height < node.rigntNode.height)
                 {
-                    bstObj.height = bstObj.rigntNode.height + 1;
+                    node.height = node.rigntNode.height + 1;
 
                 }
                 else
-                    bstObj.height = bstObj.rigntNode.height + 1;
+                    node.height = node.rigntNode.height + 1;
             }
-            else if (bstObj.rigntNode != null && bstObj.leftNode == null)
+            else if (node.rigntNode != null && node.leftNode == null)
             {
-                bstObj.height = bstObj.rigntNode.height + 1;
+                node.height = node.rigntNode.height + 1;
             }
-            else if (bstObj.rigntNode == null && bstObj.rigntNode == null)
+            else if (node.rigntNode == null && node.rigntNode == null)
             {
-                bstObj.height = 1;
+                node.height = 1;
             }
-            return bstObj;
+            return node;
         }
         public Node RightBalanceing(Node node)
         {

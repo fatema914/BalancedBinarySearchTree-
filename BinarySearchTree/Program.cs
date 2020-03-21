@@ -7,84 +7,84 @@ namespace BinarySearchTree
         public int nodeValue;
         public Node leftNode;
         public Node rigntNode;
-        public Node InsertNode(Node bstObj, int data)
+        public Node InsertNode(Node node, int data)
         {
-            if (bstObj.nodeValue == 0)
+            if (node.nodeValue == 0)
             {
-                bstObj.nodeValue = data;
+                node.nodeValue = data;
             }
-            else if (data < bstObj.nodeValue)
+            else if (data < node.nodeValue)
             {
-                if (bstObj.leftNode == null)
+                if (node.leftNode == null)
                 {
-                    bstObj.leftNode = new Node();
-                    bstObj.leftNode.nodeValue = data;
+                    node.leftNode = new Node();
+                    node.leftNode.nodeValue = data;
                 }
                 else
                 {
-                    bstObj.leftNode = InsertNode(bstObj.leftNode, data);
+                    node.leftNode = InsertNode(node.leftNode, data);
                 }
             }
             else
             {
-                if (bstObj.rigntNode == null)
+                if (node.rigntNode == null)
                 {
-                    bstObj.rigntNode = new Node();
-                    bstObj.rigntNode.nodeValue = data;
+                    node.rigntNode = new Node();
+                    node.rigntNode.nodeValue = data;
                 }
                 else
                 {
-                    bstObj.rigntNode = InsertNode(bstObj.rigntNode, data);
+                    node.rigntNode = InsertNode(node.rigntNode, data);
                 }
             }
 
-            return bstObj;
+            return node;
         }
-        public Node DeleteNode(Node bstObj, int data)
+        public Node DeleteNode(Node node, int data)
         {
             // Node newNode = new Node();
-            Node newNode = bstObj;
-            if (bstObj.nodeValue == data)
+            Node newNode = node;
+            if (node.nodeValue == data)
             {
-                if (bstObj.leftNode == null)
+                if (node.leftNode == null)
                 {
-                    bstObj = newNode.rigntNode;
+                    node = newNode.rigntNode;
                 }
-                else if (bstObj.rigntNode == null)
+                else if (node.rigntNode == null)
                 {
-                    bstObj = newNode.leftNode;
+                    node = newNode.leftNode;
                 }
                 else
                 {
-                    Node minNode = bstObj.rigntNode;
+                    Node minNode = node.rigntNode;
                     int minv = minNode.nodeValue;
                     while (minNode.leftNode != null)
                     {
                         minv = minNode.leftNode.nodeValue;
                         minNode = minNode.leftNode;
                     }
-                    bstObj.nodeValue = minv;
-                    bstObj.rigntNode = DeleteNode(bstObj.rigntNode, minv);
+                    node.nodeValue = minv;
+                    node.rigntNode = DeleteNode(node.rigntNode, minv);
                 }
             }
             else
             {
-                if (data > bstObj.nodeValue)
+                if (data > node.nodeValue)
                 {
-                    bstObj.rigntNode = DeleteNode(bstObj.rigntNode, data);
+                    node.rigntNode = DeleteNode(node.rigntNode, data);
                 }
                 else
-                    bstObj.leftNode = DeleteNode(bstObj.leftNode, data);
+                    node.leftNode = DeleteNode(node.leftNode, data);
             }
-            return bstObj;
+            return node;
         }
-        public Node preOrder(Node node)
+        public Node PreOrder(Node node)
         {
             if (node != null)
             {
                 Console.Write(node.nodeValue + " ");
-                preOrder(node.leftNode);
-                preOrder(node.rigntNode);
+                PreOrder(node.leftNode);
+                PreOrder(node.rigntNode);
             }
             return node;
         }
@@ -103,13 +103,13 @@ namespace BinarySearchTree
                 root = root.InsertNode(root, value);
             }
             Console.WriteLine("Preorder traversal of  tree is : ");
-            root.preOrder(root);
+            root.PreOrder(root);
 
             Console.WriteLine("Pleae Enter Value Which you want to delete :");
             int deleteValue = Convert.ToInt32(Console.ReadLine());
             root = root.DeleteNode(root, deleteValue);
             Console.WriteLine("After Delete Preorder traversal of  tree is : ");
-            root.preOrder(root);
+            root.PreOrder(root);
         }
     }
 }
