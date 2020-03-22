@@ -4,37 +4,37 @@ namespace BinarySearchTree
 {
     class Node
     {
-        public int nodeValue;
-        public Node leftNode;
-        public Node rigntNode;
+        public int NodeValue;
+        public Node LeftNode;
+        public Node RigntNode;
         public Node InsertNode(Node node, int data)
         {
-            if (node.nodeValue == 0)
+            if (node.NodeValue == 0)
             {
-                node.nodeValue = data;
+                node.NodeValue = data;
             }
-            else if (data < node.nodeValue)
+            else if (data < node.NodeValue)
             {
-                if (node.leftNode == null)
+                if (node.LeftNode == null)
                 {
-                    node.leftNode = new Node();
-                    node.leftNode.nodeValue = data;
+                    node.LeftNode = new Node();
+                    node.LeftNode.NodeValue = data;
                 }
                 else
                 {
-                    node.leftNode = InsertNode(node.leftNode, data);
+                    node.LeftNode = InsertNode(node.LeftNode, data);
                 }
             }
             else
             {
-                if (node.rigntNode == null)
+                if (node.RigntNode == null)
                 {
-                    node.rigntNode = new Node();
-                    node.rigntNode.nodeValue = data;
+                    node.RigntNode = new Node();
+                    node.RigntNode.NodeValue = data;
                 }
                 else
                 {
-                    node.rigntNode = InsertNode(node.rigntNode, data);
+                    node.RigntNode = InsertNode(node.RigntNode, data);
                 }
             }
 
@@ -42,39 +42,38 @@ namespace BinarySearchTree
         }
         public Node DeleteNode(Node node, int data)
         {
-            // Node newNode = new Node();
-            Node newNode = node;
-            if (node.nodeValue == data)
+            Node NewNode = node;
+            if (node.NodeValue == data)
             {
-                if (node.leftNode == null)
+                if (node.LeftNode == null)
                 {
-                    node = newNode.rigntNode;
+                    node = NewNode.RigntNode;
                 }
-                else if (node.rigntNode == null)
+                else if (node.RigntNode == null)
                 {
-                    node = newNode.leftNode;
+                    node = NewNode.LeftNode;
                 }
                 else
                 {
-                    Node minNode = node.rigntNode;
-                    int minv = minNode.nodeValue;
-                    while (minNode.leftNode != null)
+                    Node MinNode = node.RigntNode;
+                    int MinValue = MinNode.NodeValue;
+                    while (MinNode.LeftNode != null)
                     {
-                        minv = minNode.leftNode.nodeValue;
-                        minNode = minNode.leftNode;
+                        MinValue = MinNode.LeftNode.NodeValue;
+                        MinNode = MinNode.LeftNode;
                     }
-                    node.nodeValue = minv;
-                    node.rigntNode = DeleteNode(node.rigntNode, minv);
+                    node.NodeValue = MinValue;
+                    node.RigntNode = DeleteNode(node.RigntNode, MinValue);
                 }
             }
             else
             {
-                if (data > node.nodeValue)
+                if (data > node.NodeValue)
                 {
-                    node.rigntNode = DeleteNode(node.rigntNode, data);
+                    node.RigntNode = DeleteNode(node.RigntNode, data);
                 }
                 else
-                    node.leftNode = DeleteNode(node.leftNode, data);
+                    node.LeftNode = DeleteNode(node.LeftNode, data);
             }
             return node;
         }
@@ -82,9 +81,9 @@ namespace BinarySearchTree
         {
             if (node != null)
             {
-                Console.Write(node.nodeValue + " ");
-                PreOrder(node.leftNode);
-                PreOrder(node.rigntNode);
+                Console.Write(node.NodeValue + " ");
+                PreOrder(node.LeftNode);
+                PreOrder(node.RigntNode);
             }
             return node;
         }
@@ -99,15 +98,15 @@ namespace BinarySearchTree
             int n = Convert.ToInt32(Console.ReadLine());
             for (int i = 1; i <= n; i++)
             {
-                int value = Convert.ToInt32(Console.ReadLine());
-                root = root.InsertNode(root, value);
+                int Value = Convert.ToInt32(Console.ReadLine());
+                root = root.InsertNode(root, Value);
             }
             Console.WriteLine("Preorder traversal of  tree is : ");
             root.PreOrder(root);
 
             Console.WriteLine("Pleae Enter Value Which you want to delete :");
-            int deleteValue = Convert.ToInt32(Console.ReadLine());
-            root = root.DeleteNode(root, deleteValue);
+            int DeleteValue = Convert.ToInt32(Console.ReadLine());
+            root = root.DeleteNode(root, DeleteValue);
             Console.WriteLine("After Delete Preorder traversal of  tree is : ");
             root.PreOrder(root);
         }
