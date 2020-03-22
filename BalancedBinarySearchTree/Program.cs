@@ -155,10 +155,10 @@ namespace BinarySearchTree
                 PreOrder(node.RigntNode);
             }
         }
-        public Node DeleteNode(Node node, int NewNodeValue)
+        public Node DeleteNode(Node node, int DeleteValue)
         {
             Node TempNode = node;
-            if (node.NodeValue == NewNodeValue)
+            if (node.NodeValue == DeleteValue)
             {
                 if (node.LeftNode == null)
                 {
@@ -183,12 +183,12 @@ namespace BinarySearchTree
             }
             else
             {
-                if (NewNodeValue > node.NodeValue)
+                if (DeleteValue > node.NodeValue)
                 {
-                    node.RigntNode = DeleteNode(node.RigntNode, NewNodeValue);
+                    node.RigntNode = DeleteNode(node.RigntNode, DeleteValue);
                 }
                 else
-                    node.LeftNode = DeleteNode(node.LeftNode, NewNodeValue);
+                    node.LeftNode = DeleteNode(node.LeftNode, DeleteValue);
             }
             if (node != null)
             {
