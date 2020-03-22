@@ -2,12 +2,33 @@
 
 namespace BinarySearchTree
 {
-    class Node
+    public class BinaryTree
     {
-        public int NodeValue;
-        public Node LeftNode;
-        public Node RigntNode;
-        public Node InsertNode(Node node, int data)
+        public class Node
+        {
+            public int NodeValue;
+            public Node LeftNode;
+            public Node RigntNode;
+        }
+        Node root;
+        public BinaryTree()
+        {
+            root = null;
+        }
+        public Node InsertNode(int data)
+        {
+            if (root == null)
+            {
+                root = new Node();
+                root.NodeValue = data;
+            }
+            else
+            {
+                root = InsertRec(root, data);
+            }
+            return root;
+        }
+        public Node InsertRec(Node node, int data)
         {
             if (node.NodeValue == 0)
             {
@@ -22,7 +43,7 @@ namespace BinarySearchTree
                 }
                 else
                 {
-                    node.LeftNode = InsertNode(node.LeftNode, data);
+                    node.LeftNode = InsertRec(node.LeftNode, data);
                 }
             }
             else
@@ -34,13 +55,17 @@ namespace BinarySearchTree
                 }
                 else
                 {
-                    node.RigntNode = InsertNode(node.RigntNode, data);
+                    node.RigntNode = InsertRec(node.RigntNode, data);
                 }
             }
-
             return node;
         }
-        public Node DeleteNode(Node node, int data)
+        public Node DeleteNode(int data)
+        {
+            root = DeleteNodeRec(root, data);
+            return root;
+        }
+        public Node DeleteNodeRec(Node node, int data)
         {
             Node NewNode = node;
             if (node.NodeValue == data)
@@ -56,34 +81,39 @@ namespace BinarySearchTree
                 else
                 {
                     Node MinNode = node.RigntNode;
-                    int MinValue = MinNode.NodeValue;
+                    int minValue = MinNode.NodeValue;
                     while (MinNode.LeftNode != null)
                     {
-                        MinValue = MinNode.LeftNode.NodeValue;
+                        minValue = MinNode.LeftNode.NodeValue;
                         MinNode = MinNode.LeftNode;
                     }
-                    node.NodeValue = MinValue;
-                    node.RigntNode = DeleteNode(node.RigntNode, MinValue);
+                    node.NodeValue = minValue;
+                    node.RigntNode = DeleteNodeRec(node.RigntNode, minValue);
                 }
             }
             else
             {
                 if (data > node.NodeValue)
                 {
-                    node.RigntNode = DeleteNode(node.RigntNode, data);
+                    node.RigntNode = DeleteNodeRec(node.RigntNode, data);
                 }
                 else
-                    node.LeftNode = DeleteNode(node.LeftNode, data);
+                    node.LeftNode = DeleteNodeRec(node.LeftNode, data);
             }
             return node;
         }
-        public Node PreOrder(Node node)
+        public Node PreOrder()
+        {
+           root = PreOrderRec(root);
+            return root;
+        }
+        public Node PreOrderRec(Node node)
         {
             if (node != null)
             {
                 Console.Write(node.NodeValue + " ");
-                PreOrder(node.LeftNode);
-                PreOrder(node.RigntNode);
+                PreOrderRec(node.LeftNode);
+                PreOrderRec(node.RigntNode);
             }
             return node;
         }
@@ -92,23 +122,22 @@ namespace BinarySearchTree
     {
         static void Main(string[] args)
         {
-            Node bst = new Node();
-            Node root = new Node();
+            BinaryTree bTree = new BinaryTree();
             Console.WriteLine("Pleae Enter the number of node :");
             int n = Convert.ToInt32(Console.ReadLine());
             for (int i = 1; i <= n; i++)
             {
                 int Value = Convert.ToInt32(Console.ReadLine());
-                root = root.InsertNode(root, Value);
+                bTree.InsertNode(Value);
             }
             Console.WriteLine("Preorder traversal of  tree is : ");
-            root.PreOrder(root);
+            bTree.PreOrder();
 
             Console.WriteLine("Pleae Enter Value Which you want to delete :");
             int DeleteValue = Convert.ToInt32(Console.ReadLine());
-            root = root.DeleteNode(root, DeleteValue);
+            bTree.DeleteNode(DeleteValue);
             Console.WriteLine("After Delete Preorder traversal of  tree is : ");
-            root.PreOrder(root);
+            bTree.PreOrder();
         }
     }
 }
