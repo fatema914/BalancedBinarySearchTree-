@@ -4,51 +4,51 @@ namespace BinarySearchTree
 {
     class Node
     {
-        public int nodeValue;
-        public int height;
-        public Node leftNode;
-        public Node rigntNode;
-        public Node InsertNode(Node node, int data)
+        public int NodeValue;
+        public int Height;
+        public Node LeftNode;
+        public Node RigntNode;
+        public Node InsertNode(Node node, int NewNodeValue)
         {
-            if (node.nodeValue == 0)
+            if (node.NodeValue == 0)
             {
-                node.nodeValue = data;
-                node.height = 1;
+                node.NodeValue = NewNodeValue;
+                node.Height = 1;
             }
-            else if (data < node.nodeValue)
+            else if (NewNodeValue < node.NodeValue)
             {
-                if (node.leftNode == null)
+                if (node.LeftNode == null)
                 {
-                    node.leftNode = new Node();
-                    node.leftNode.nodeValue = data;
-                    node.leftNode.height = 1;
+                    node.LeftNode = new Node();
+                    node.LeftNode.NodeValue = NewNodeValue;
+                    node.LeftNode.Height = 1;
                 }
                 else
                 {
-                    node.leftNode = InsertNode(node.leftNode, data);
+                    node.LeftNode = InsertNode(node.LeftNode, NewNodeValue);
                 }
             }
             else
             {
-                if (node.rigntNode == null)
+                if (node.RigntNode == null)
                 {
-                    node.rigntNode = new Node();
-                    node.rigntNode.nodeValue = data;
-                    node.rigntNode.height = 1;
+                    node.RigntNode = new Node();
+                    node.RigntNode.NodeValue = NewNodeValue;
+                    node.RigntNode.Height = 1;
                 }
                 else
                 {
-                    node.rigntNode = InsertNode(node.rigntNode, data);
+                    node.RigntNode = InsertNode(node.RigntNode, NewNodeValue);
                 }
             }
-            //Calculate left and right height of each node
-            node = node.Getheight(node);
+            //Calculate left and right Height of each node
+            node = node.GetHeight(node);
             //Calculate Is balancing needed of each node
             int balanceFactor = node.GetBalanceFactor(node);
 
             if (balanceFactor > 1)
             {
-                if (data < node.leftNode.nodeValue)
+                if (NewNodeValue < node.LeftNode.NodeValue)
                 {
                     node = node.LeftBalanceing(node);
                 }
@@ -59,7 +59,7 @@ namespace BinarySearchTree
             }
             else if (balanceFactor < -1)
             {
-                if (data > node.rigntNode.nodeValue)
+                if (NewNodeValue > node.RigntNode.NodeValue)
                 {
                     node = node.RightBalanceing(node);
                 }
@@ -71,133 +71,133 @@ namespace BinarySearchTree
         public int GetBalanceFactor(Node node)
         {
             int isBalance = 0;
-            if (node.leftNode != null && node.rigntNode == null)
+            if (node.LeftNode != null && node.RigntNode == null)
             {
-                isBalance = node.leftNode.height;
+                isBalance = node.LeftNode.Height;
             }
-            else if (node.leftNode == null && node.rigntNode != null)
+            else if (node.LeftNode == null && node.RigntNode != null)
             {
-                isBalance = -(node.rigntNode.height);
+                isBalance = -(node.RigntNode.Height);
             }
-            else if (node.leftNode != null && node.rigntNode != null)
+            else if (node.LeftNode != null && node.RigntNode != null)
             {
-                isBalance = node.leftNode.height - node.rigntNode.height;
+                isBalance = node.LeftNode.Height - node.RigntNode.Height;
             }
             return isBalance;
         }
-        public Node Getheight(Node node)
+        public Node GetHeight(Node node)
         {
-            if (node.leftNode != null && node.rigntNode == null)
+            if (node.LeftNode != null && node.RigntNode == null)
             {
-                node.height = node.leftNode.height + 1;
+                node.Height = node.LeftNode.Height + 1;
             }
-            else if (node.leftNode != null && node.rigntNode != null)
+            else if (node.LeftNode != null && node.RigntNode != null)
             {
-                if (node.leftNode.height > node.rigntNode.height)
+                if (node.LeftNode.Height > node.RigntNode.Height)
                 {
-                    node.height = node.leftNode.height + 1;
+                    node.Height = node.LeftNode.Height + 1;
                 }
-                else if (node.leftNode.height < node.rigntNode.height)
+                else if (node.LeftNode.Height < node.RigntNode.Height)
                 {
-                    node.height = node.rigntNode.height + 1;
+                    node.Height = node.RigntNode.Height + 1;
                 }
                 else
-                    node.height = node.rigntNode.height + 1;
+                    node.Height = node.RigntNode.Height + 1;
             }
-            else if (node.rigntNode != null && node.leftNode == null)
+            else if (node.RigntNode != null && node.LeftNode == null)
             {
-                node.height = node.rigntNode.height + 1;
+                node.Height = node.RigntNode.Height + 1;
             }
-            else if (node.rigntNode == null && node.leftNode == null)
+            else if (node.RigntNode == null && node.LeftNode == null)
             {
-                node.height = 1;
+                node.Height = 1;
             }
             return node;
         }
         public Node RightBalanceing(Node node)
         {
-            Node tempNode = node.rigntNode;
-            node.rigntNode = tempNode.leftNode;
-            tempNode.leftNode = node;
-            tempNode.leftNode = Getheight(tempNode.leftNode);
-            return tempNode;
+            Node TempNode = node.RigntNode;
+            node.RigntNode = TempNode.LeftNode;
+            TempNode.LeftNode = node;
+            TempNode.LeftNode = GetHeight(TempNode.LeftNode);
+            return TempNode;
         }
         public Node LeftBalanceing(Node node)
         {
-            Node tempNode = node.leftNode;
-            node.leftNode = tempNode.rigntNode;
-            tempNode.rigntNode = node;
-            tempNode.rigntNode = Getheight(tempNode.rigntNode);
-            return tempNode;
+            Node TempNode = node.LeftNode;
+            node.LeftNode = TempNode.RigntNode;
+            TempNode.RigntNode = node;
+            TempNode.RigntNode = GetHeight(TempNode.RigntNode);
+            return TempNode;
         }
         public Node LeftRightBalancing(Node node)
         {
-            Node tempNode = node.leftNode;
-            node.leftNode = RightBalanceing(tempNode);
+            Node TempNode = node.LeftNode;
+            node.LeftNode = RightBalanceing(TempNode);
             node = LeftBalanceing(node);
-            node = Getheight(node);
+            node = GetHeight(node);
             return node;
         }
         public Node RightLeftBalancing(Node node)
         {
-            Node tempNode = node.rigntNode;
-            node.rigntNode = LeftBalanceing(tempNode);
+            Node TempNode = node.RigntNode;
+            node.RigntNode = LeftBalanceing(TempNode);
             node = RightBalanceing(node);
-            node = Getheight(node);
+            node = GetHeight(node);
             return node;
         }
         public void PreOrder(Node node)
         {
             if (node != null)
             {
-                Console.Write(node.nodeValue + " ");
-                PreOrder(node.leftNode);
-                PreOrder(node.rigntNode);
+                Console.Write(node.NodeValue + " ");
+                PreOrder(node.LeftNode);
+                PreOrder(node.RigntNode);
             }
         }
-        public Node DeleteNode(Node node, int data)
+        public Node DeleteNode(Node node, int NewNodeValue)
         {
-            Node tempNode = node;
-            if (node.nodeValue == data)
+            Node TempNode = node;
+            if (node.NodeValue == NewNodeValue)
             {
-                if (node.leftNode == null)
+                if (node.LeftNode == null)
                 {
-                    node = tempNode.rigntNode;
+                    node = TempNode.RigntNode;
                 }
-                else if (node.rigntNode == null)
+                else if (node.RigntNode == null)
                 {
-                    node = tempNode.leftNode;
+                    node = TempNode.LeftNode;
                 }
                 else
                 {
-                    Node minValueNode = node.rigntNode;
-                    int minv = minValueNode.nodeValue;
-                    while (minValueNode.leftNode != null)
+                    Node minValueNode = node.RigntNode;
+                    int minv = minValueNode.NodeValue;
+                    while (minValueNode.LeftNode != null)
                     {
-                        minv = minValueNode.leftNode.nodeValue;
-                        minValueNode = minValueNode.leftNode;
+                        minv = minValueNode.LeftNode.NodeValue;
+                        minValueNode = minValueNode.LeftNode;
                     }
-                    node.nodeValue = minv;
-                    node.rigntNode = DeleteNode(node.rigntNode, minv);
+                    node.NodeValue = minv;
+                    node.RigntNode = DeleteNode(node.RigntNode, minv);
                 }
             }
             else
             {
-                if (data > node.nodeValue)
+                if (NewNodeValue > node.NodeValue)
                 {
-                    node.rigntNode = DeleteNode(node.rigntNode, data);
+                    node.RigntNode = DeleteNode(node.RigntNode, NewNodeValue);
                 }
                 else
-                    node.leftNode = DeleteNode(node.leftNode, data);
+                    node.LeftNode = DeleteNode(node.LeftNode, NewNodeValue);
             }
             if (node != null)
             {
-                node = node.Getheight(node);
+                node = node.GetHeight(node);
                 int balanceFactor = node.GetBalanceFactor(node);
 
                 if (balanceFactor > 1)
                 {
-                    if (node.nodeValue < node.leftNode.nodeValue)
+                    if (node.NodeValue < node.LeftNode.NodeValue)
                     {
                         node = node.LeftBalanceing(node);
                     }
@@ -208,7 +208,7 @@ namespace BinarySearchTree
                 }
                 else if (balanceFactor < -1)
                 {
-                    if (node.nodeValue > node.rigntNode.nodeValue)
+                    if (node.NodeValue > node.RigntNode.NodeValue)
                     {
                         node = node.RightBalanceing(node);
                     }
@@ -228,8 +228,8 @@ namespace BinarySearchTree
             int n = Convert.ToInt32(Console.ReadLine());
             for (int i = 1; i <= n; i++)
             {
-                int value = Convert.ToInt32(Console.ReadLine());
-                root = root.InsertNode(root, value);
+                int Value = Convert.ToInt32(Console.ReadLine());
+                root = root.InsertNode(root, Value);
             }
             Console.WriteLine("Preorder traversal of  tree is : ");
             root.PreOrder(root);
