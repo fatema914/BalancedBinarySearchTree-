@@ -52,7 +52,7 @@ namespace BinarySearchTree
                 {
                     node = node.LeftBalanceing(node);
                 }
-                if (data > node.rigntNode.nodeValue)
+                else
                 {
                     node = node.LeftRightBalancing(node);
                 }
@@ -100,7 +100,6 @@ namespace BinarySearchTree
                 else if (node.leftNode.height < node.rigntNode.height)
                 {
                     node.height = node.rigntNode.height + 1;
-
                 }
                 else
                     node.height = node.rigntNode.height + 1;
@@ -109,7 +108,7 @@ namespace BinarySearchTree
             {
                 node.height = node.rigntNode.height + 1;
             }
-            else if (node.rigntNode == null && node.rigntNode == null)
+            else if (node.rigntNode == null && node.leftNode == null)
             {
                 node.height = 1;
             }
@@ -156,6 +155,69 @@ namespace BinarySearchTree
                 PreOrder(node.rigntNode);
             }
         }
+        public Node DeleteNode(Node node, int data)
+        {
+            Node tempNode = node;
+            if (node.nodeValue == data)
+            {
+                if (node.leftNode == null)
+                {
+                    node = tempNode.rigntNode;
+                }
+                else if (node.rigntNode == null)
+                {
+                    node = tempNode.leftNode;
+                }
+                else
+                {
+                    Node minValueNode = node.rigntNode;
+                    int minv = minValueNode.nodeValue;
+                    while (minValueNode.leftNode != null)
+                    {
+                        minv = minValueNode.leftNode.nodeValue;
+                        minValueNode = minValueNode.leftNode;
+                    }
+                    node.nodeValue = minv;
+                    node.rigntNode = DeleteNode(node.rigntNode, minv);
+                }
+            }
+            else
+            {
+                if (data > node.nodeValue)
+                {
+                    node.rigntNode = DeleteNode(node.rigntNode, data);
+                }
+                else
+                    node.leftNode = DeleteNode(node.leftNode, data);
+            }
+            if (node != null)
+            {
+                node = node.Getheight(node);
+                int balanceFactor = node.GetBalanceFactor(node);
+
+                if (balanceFactor > 1)
+                {
+                    if (node.nodeValue < node.leftNode.nodeValue)
+                    {
+                        node = node.LeftBalanceing(node);
+                    }
+                    else
+                    {
+                        node = node.LeftRightBalancing(node);
+                    }
+                }
+                else if (balanceFactor < -1)
+                {
+                    if (node.nodeValue > node.rigntNode.nodeValue)
+                    {
+                        node = node.RightBalanceing(node);
+                    }
+                    else
+                        node = node.RightLeftBalancing(node);
+                }
+            }
+            return node;
+        }
     }
     public class Program
     {
@@ -169,7 +231,12 @@ namespace BinarySearchTree
                 int value = Convert.ToInt32(Console.ReadLine());
                 root = root.InsertNode(root, value);
             }
-            Console.Write("Preorder traversal of  tree is : ");
+            Console.WriteLine("Preorder traversal of  tree is : ");
+            root.PreOrder(root);
+            Console.WriteLine("Pleae Enter Value Which you want to delete :");
+            int deleteValue = Convert.ToInt32(Console.ReadLine());
+            root = root.DeleteNode(root, deleteValue);
+            Console.WriteLine("After Delete Preorder traversal of Balanced Binary tree is : ");
             root.PreOrder(root);
         }
     }
