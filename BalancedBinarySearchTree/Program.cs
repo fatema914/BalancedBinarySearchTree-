@@ -2,30 +2,51 @@
 
 namespace BinarySearchTree
 {
-    class Node
+    public class Node
     {
         public int NodeValue;
         public int Height;
         public Node LeftNode;
         public Node RigntNode;
-        public Node InsertNode(Node node, int NewNodeValue)
+    }
+    public class BalancedBinaryTree
+    {
+        Node root;
+        public BalancedBinaryTree()
+        {
+            root = null;
+        }
+        public Node InsertNode(Node node)
+        {
+            if (root == null)
+            {
+                root = node;
+                node.Height = 1;
+            }
+            else
+            {
+                root = InsertNodeRec(root, node.NodeValue);
+            }
+            return root;
+        }
+        public Node InsertNodeRec(Node node, int data)
         {
             if (node.NodeValue == 0)
             {
-                node.NodeValue = NewNodeValue;
+                node.NodeValue = data;
                 node.Height = 1;
             }
-            else if (NewNodeValue < node.NodeValue)
+            if (data < node.NodeValue)
             {
                 if (node.LeftNode == null)
                 {
                     node.LeftNode = new Node();
-                    node.LeftNode.NodeValue = NewNodeValue;
+                    node.LeftNode.NodeValue = data;
                     node.LeftNode.Height = 1;
                 }
                 else
                 {
-                    node.LeftNode = InsertNode(node.LeftNode, NewNodeValue);
+                    node.LeftNode = InsertNodeRec(node.LeftNode, data);
                 }
             }
             else
@@ -33,57 +54,56 @@ namespace BinarySearchTree
                 if (node.RigntNode == null)
                 {
                     node.RigntNode = new Node();
-                    node.RigntNode.NodeValue = NewNodeValue;
+                    node.RigntNode.NodeValue = data;
                     node.RigntNode.Height = 1;
                 }
                 else
                 {
-                    node.RigntNode = InsertNode(node.RigntNode, NewNodeValue);
+                    node.RigntNode = InsertNodeRec(node.RigntNode, data);
                 }
             }
             //Calculate left and right Height of each node
-            node = node.GetHeight(node);
-            //Calculate Is balancing needed of each node
-            int balanceFactor = node.GetBalanceFactor(node);
+            node = GetHeight(node);           
+            int balanceFactor = GetBalanceFactor(node);
 
             if (balanceFactor > 1)
             {
-                if (NewNodeValue < node.LeftNode.NodeValue)
+                if (data < node.LeftNode.NodeValue)
                 {
-                    node = node.LeftBalanceing(node);
+                    node = LeftBalanceing(node);
                 }
                 else
                 {
-                    node = node.LeftRightBalancing(node);
+                    node = LeftRightBalancing(node);
                 }
             }
             else if (balanceFactor < -1)
             {
-                if (NewNodeValue > node.RigntNode.NodeValue)
+                if (data > node.RigntNode.NodeValue)
                 {
-                    node = node.RightBalanceing(node);
+                    node = RightBalanceing(node);
                 }
                 else
-                    node = node.RightLeftBalancing(node);
+                    node = RightLeftBalancing(node);
             }
             return node;
         }
         public int GetBalanceFactor(Node node)
         {
-            int isBalance = 0;
+            int balanceFactor = 0;
             if (node.LeftNode != null && node.RigntNode == null)
             {
-                isBalance = node.LeftNode.Height;
+                balanceFactor = node.LeftNode.Height;
             }
             else if (node.LeftNode == null && node.RigntNode != null)
             {
-                isBalance = -(node.RigntNode.Height);
+                balanceFactor = -(node.RigntNode.Height);
             }
             else if (node.LeftNode != null && node.RigntNode != null)
             {
-                isBalance = node.LeftNode.Height - node.RigntNode.Height;
+                balanceFactor = node.LeftNode.Height - node.RigntNode.Height;
             }
-            return isBalance;
+            return balanceFactor;
         }
         public Node GetHeight(Node node)
         {
@@ -116,57 +136,68 @@ namespace BinarySearchTree
         }
         public Node RightBalanceing(Node node)
         {
-            Node TempNode = node.RigntNode;
-            node.RigntNode = TempNode.LeftNode;
-            TempNode.LeftNode = node;
-            TempNode.LeftNode = GetHeight(TempNode.LeftNode);
-            return TempNode;
+            Node tempNode = node.RigntNode;
+            node.RigntNode = tempNode.LeftNode;
+            tempNode.LeftNode = node;
+            tempNode.LeftNode = GetHeight(tempNode.LeftNode);
+            return tempNode;
         }
         public Node LeftBalanceing(Node node)
         {
-            Node TempNode = node.LeftNode;
-            node.LeftNode = TempNode.RigntNode;
-            TempNode.RigntNode = node;
-            TempNode.RigntNode = GetHeight(TempNode.RigntNode);
-            return TempNode;
+            Node tempNode = node.LeftNode;
+            node.LeftNode = tempNode.RigntNode;
+            tempNode.RigntNode = node;
+            tempNode.RigntNode = GetHeight(tempNode.RigntNode);
+            return tempNode;
         }
         public Node LeftRightBalancing(Node node)
         {
-            Node TempNode = node.LeftNode;
-            node.LeftNode = RightBalanceing(TempNode);
+            Node tempNode = node.LeftNode;
+            node.LeftNode = RightBalanceing(tempNode);
             node = LeftBalanceing(node);
             node = GetHeight(node);
             return node;
         }
         public Node RightLeftBalancing(Node node)
         {
-            Node TempNode = node.RigntNode;
-            node.RigntNode = LeftBalanceing(TempNode);
+            Node tempNode = node.RigntNode;
+            node.RigntNode = LeftBalanceing(tempNode);
             node = RightBalanceing(node);
             node = GetHeight(node);
             return node;
         }
-        public void PreOrder(Node node)
+        public Node PreOrderTraverser()
+        {
+            root = PreOrderRec(root);
+            return root;
+        }
+        public Node PreOrderRec(Node node)
         {
             if (node != null)
             {
-                Console.Write(node.NodeValue + " ");
-                PreOrder(node.LeftNode);
-                PreOrder(node.RigntNode);
+                Console.WriteLine(node.NodeValue + " ");
+                PreOrderRec(node.LeftNode);
+                PreOrderRec(node.RigntNode);
             }
+            return node;
         }
-        public Node DeleteNode(Node node, int DeleteValue)
+        public Node DeleteNode(Node node)
         {
-            Node TempNode = node;
-            if (node.NodeValue == DeleteValue)
+            root = DeleteNodeRec(root, node.NodeValue);
+            return root;
+        }
+        public Node DeleteNodeRec(Node node, int data)
+        {
+            Node nodeToDelete = node;
+            if (node.NodeValue == data)
             {
                 if (node.LeftNode == null)
                 {
-                    node = TempNode.RigntNode;
+                    node = nodeToDelete.RigntNode;
                 }
                 else if (node.RigntNode == null)
                 {
-                    node = TempNode.LeftNode;
+                    node = nodeToDelete.LeftNode;
                 }
                 else
                 {
@@ -178,42 +209,42 @@ namespace BinarySearchTree
                         minValueNode = minValueNode.LeftNode;
                     }
                     node.NodeValue = minv;
-                    node.RigntNode = DeleteNode(node.RigntNode, minv);
+                    node.RigntNode = DeleteNodeRec(node.RigntNode, minv);
                 }
             }
             else
             {
-                if (DeleteValue > node.NodeValue)
+                if (data > node.NodeValue)
                 {
-                    node.RigntNode = DeleteNode(node.RigntNode, DeleteValue);
+                    node.RigntNode = DeleteNodeRec(node.RigntNode, data);
                 }
                 else
-                    node.LeftNode = DeleteNode(node.LeftNode, DeleteValue);
+                    node.LeftNode = DeleteNodeRec(node.LeftNode, data);
             }
             if (node != null)
             {
-                node = node.GetHeight(node);
-                int balanceFactor = node.GetBalanceFactor(node);
+                node = GetHeight(node);
+                int balanceFactor = GetBalanceFactor(node);
 
                 if (balanceFactor > 1)
                 {
                     if (node.NodeValue < node.LeftNode.NodeValue)
                     {
-                        node = node.LeftBalanceing(node);
+                        node = LeftBalanceing(node);
                     }
                     else
                     {
-                        node = node.LeftRightBalancing(node);
+                        node = LeftRightBalancing(node);
                     }
                 }
                 else if (balanceFactor < -1)
                 {
                     if (node.NodeValue > node.RigntNode.NodeValue)
                     {
-                        node = node.RightBalanceing(node);
+                        node = RightBalanceing(node);
                     }
                     else
-                        node = node.RightLeftBalancing(node);
+                        node = RightLeftBalancing(node);
                 }
             }
             return node;
@@ -223,21 +254,25 @@ namespace BinarySearchTree
     {
         static void Main(string[] args)
         {
-            Node root = new Node();
+            BalancedBinaryTree balBinaryTree = new BalancedBinaryTree();
             Console.WriteLine("Pleae Enter the number of node :");
             int n = Convert.ToInt32(Console.ReadLine());
             for (int i = 1; i <= n; i++)
             {
-                int Value = Convert.ToInt32(Console.ReadLine());
-                root = root.InsertNode(root, Value);
+                int data = Convert.ToInt32(Console.ReadLine());
+                Node node = new Node();
+                node.NodeValue = data;
+                balBinaryTree.InsertNode(node);
             }
             Console.WriteLine("Preorder traversal of  tree is : ");
-            root.PreOrder(root);
+            balBinaryTree.PreOrderTraverser();
             Console.WriteLine("Pleae Enter Value Which you want to delete :");
             int deleteValue = Convert.ToInt32(Console.ReadLine());
-            root = root.DeleteNode(root, deleteValue);
+            Node nodeDelete = new Node();
+            nodeDelete.NodeValue = deleteValue;
+            balBinaryTree.DeleteNode(nodeDelete);
             Console.WriteLine("After Delete Preorder traversal of Balanced Binary tree is : ");
-            root.PreOrder(root);
+            balBinaryTree.PreOrderTraverser();
         }
     }
 }
