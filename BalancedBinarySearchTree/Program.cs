@@ -63,9 +63,8 @@ namespace BinarySearchTree
                     node.RigntNode = InsertNodeRec(node.RigntNode, data);
                 }
             }
-            //Calculate left and right Height of each node
             node = CalculateHeightOfNode(node);
-            int heightDifference = GetHeightDiffOfNode(node);
+            int heightDifference = GetHeightDiffOfChildNode(node);
 
             if (heightDifference > 1)
             {
@@ -89,7 +88,7 @@ namespace BinarySearchTree
             }
             return node;
         }
-        public int GetHeightDiffOfNode(Node node)
+        public int GetHeightDiffOfChildNode(Node node)
         {
             int heightDifference = 0;
             if (node.LeftNode != null && node.RigntNode == null)
@@ -225,7 +224,7 @@ namespace BinarySearchTree
             if (node != null)
             {
                 node = CalculateHeightOfNode(node);
-                int heightDifference = GetHeightDiffOfNode(node);
+                int heightDifference = GetHeightDiffOfChildNode(node);
 
                 if (heightDifference > 1)
                 {
