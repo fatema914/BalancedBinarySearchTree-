@@ -35,9 +35,12 @@ namespace BinarySearchTree
             {
                 if (node.LeftNode == null)
                 {
-                    node.LeftNode = new Node();
-                    node.LeftNode.NodeValue = data;
-                    node.LeftNode.Height = 1;
+                    var leftNode = new Node
+                    {
+                        NodeValue = data,
+                        Height = 1
+                    };
+                    node.LeftNode = leftNode;
                 }
                 else
                 {
@@ -48,9 +51,12 @@ namespace BinarySearchTree
             {
                 if (node.RigntNode == null)
                 {
-                    node.RigntNode = new Node();
-                    node.RigntNode.NodeValue = data;
-                    node.RigntNode.Height = 1;
+                    var rigntNode = new Node
+                    {
+                        NodeValue = data,
+                        Height = 1
+                    };
+                    node.RigntNode = rigntNode;
                 }
                 else
                 {
