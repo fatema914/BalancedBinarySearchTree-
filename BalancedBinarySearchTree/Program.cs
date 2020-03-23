@@ -63,28 +63,28 @@ namespace BinarySearchTree
                 }
             }
             //Calculate left and right Height of each node
-            node = GetHeight(node);           
+            node = CalculateHeightOfNode(node);
             int balanceFactor = GetBalanceFactor(node);
 
             if (balanceFactor > 1)
             {
                 if (data < node.LeftNode.NodeValue)
                 {
-                    node = LeftBalanceing(node);
+                    node = LeftRotation(node);
                 }
                 else
                 {
-                    node = LeftRightBalancing(node);
+                    node = LeftRightRotation(node);
                 }
             }
             else if (balanceFactor < -1)
             {
                 if (data > node.RigntNode.NodeValue)
                 {
-                    node = RightBalanceing(node);
+                    node = RightRotation(node);
                 }
                 else
-                    node = RightLeftBalancing(node);
+                    node = RightLeftRotation(node);
             }
             return node;
         }
@@ -105,7 +105,7 @@ namespace BinarySearchTree
             }
             return balanceFactor;
         }
-        public Node GetHeight(Node node)
+        public Node CalculateHeightOfNode(Node node)
         {
             if (node.LeftNode != null && node.RigntNode == null)
             {
@@ -134,36 +134,36 @@ namespace BinarySearchTree
             }
             return node;
         }
-        public Node RightBalanceing(Node node)
+        public Node RightRotation(Node node)
         {
             Node tempNode = node.RigntNode;
             node.RigntNode = tempNode.LeftNode;
             tempNode.LeftNode = node;
-            tempNode.LeftNode = GetHeight(tempNode.LeftNode);
+            tempNode.LeftNode = CalculateHeightOfNode(tempNode.LeftNode);
             return tempNode;
         }
-        public Node LeftBalanceing(Node node)
+        public Node LeftRotation(Node node)
         {
             Node tempNode = node.LeftNode;
             node.LeftNode = tempNode.RigntNode;
             tempNode.RigntNode = node;
-            tempNode.RigntNode = GetHeight(tempNode.RigntNode);
+            tempNode.RigntNode = CalculateHeightOfNode(tempNode.RigntNode);
             return tempNode;
         }
-        public Node LeftRightBalancing(Node node)
+        public Node LeftRightRotation(Node node)
         {
             Node tempNode = node.LeftNode;
-            node.LeftNode = RightBalanceing(tempNode);
-            node = LeftBalanceing(node);
-            node = GetHeight(node);
+            node.LeftNode = RightRotation(tempNode);
+            node = LeftRotation(node);
+            node = CalculateHeightOfNode(node);
             return node;
         }
-        public Node RightLeftBalancing(Node node)
+        public Node RightLeftRotation(Node node)
         {
             Node tempNode = node.RigntNode;
-            node.RigntNode = LeftBalanceing(tempNode);
-            node = RightBalanceing(node);
-            node = GetHeight(node);
+            node.RigntNode = LeftRotation(tempNode);
+            node = RightRotation(node);
+            node = CalculateHeightOfNode(node);
             return node;
         }
         public Node PreOrderTraverser()
@@ -223,28 +223,28 @@ namespace BinarySearchTree
             }
             if (node != null)
             {
-                node = GetHeight(node);
+                node = CalculateHeightOfNode(node);
                 int balanceFactor = GetBalanceFactor(node);
 
                 if (balanceFactor > 1)
                 {
                     if (node.NodeValue < node.LeftNode.NodeValue)
                     {
-                        node = LeftBalanceing(node);
+                        node = LeftRotation(node);
                     }
                     else
                     {
-                        node = LeftRightBalancing(node);
+                        node = LeftRightRotation(node);
                     }
                 }
                 else if (balanceFactor < -1)
                 {
                     if (node.NodeValue > node.RigntNode.NodeValue)
                     {
-                        node = RightBalanceing(node);
+                        node = RightRotation(node);
                     }
                     else
-                        node = RightLeftBalancing(node);
+                        node = RightLeftRotation(node);
                 }
             }
             return node;
