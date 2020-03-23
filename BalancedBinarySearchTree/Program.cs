@@ -59,9 +59,9 @@ namespace BinarySearchTree
             }
             //Calculate left and right Height of each node
             node = CalculateHeightOfNode(node);
-            int balanceFactor = GetBalanceFactor(node);
+            int heightDifference = GetHeightDiffOfNode(node);
 
-            if (balanceFactor > 1)
+            if (heightDifference > 1)
             {
                 if (data < node.LeftNode.NodeValue)
                 {
@@ -72,7 +72,7 @@ namespace BinarySearchTree
                     node = LeftRightRotation(node);
                 }
             }
-            else if (balanceFactor < -1)
+            else if (heightDifference < -1)
             {
                 if (data > node.RigntNode.NodeValue)
                 {
@@ -83,22 +83,22 @@ namespace BinarySearchTree
             }
             return node;
         }
-        public int GetBalanceFactor(Node node)
+        public int GetHeightDiffOfNode(Node node)
         {
-            int balanceFactor = 0;
+            int heightDifference = 0;
             if (node.LeftNode != null && node.RigntNode == null)
             {
-                balanceFactor = node.LeftNode.Height;
+                heightDifference = node.LeftNode.Height;
             }
             else if (node.LeftNode == null && node.RigntNode != null)
             {
-                balanceFactor = -(node.RigntNode.Height);
+                heightDifference = -(node.RigntNode.Height);
             }
             else if (node.LeftNode != null && node.RigntNode != null)
             {
-                balanceFactor = node.LeftNode.Height - node.RigntNode.Height;
+                heightDifference = node.LeftNode.Height - node.RigntNode.Height;
             }
-            return balanceFactor;
+            return heightDifference;
         }
         public Node CalculateHeightOfNode(Node node)
         {
@@ -219,9 +219,9 @@ namespace BinarySearchTree
             if (node != null)
             {
                 node = CalculateHeightOfNode(node);
-                int balanceFactor = GetBalanceFactor(node);
+                int heightDifference = GetHeightDiffOfNode(node);
 
-                if (balanceFactor > 1)
+                if (heightDifference > 1)
                 {
                     if (node.NodeValue < node.LeftNode.NodeValue)
                     {
@@ -232,7 +232,7 @@ namespace BinarySearchTree
                         node = LeftRightRotation(node);
                     }
                 }
-                else if (balanceFactor < -1)
+                else if (heightDifference < -1)
                 {
                     if (node.NodeValue > node.RigntNode.NodeValue)
                     {
