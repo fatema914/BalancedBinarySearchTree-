@@ -31,11 +31,6 @@ namespace BinarySearchTree
         }
         public Node InsertNodeRec(Node node, int data)
         {
-            if (node.NodeValue == 0)
-            {
-                node.NodeValue = data;
-                node.Height = 1;
-            }
             if (data < node.NodeValue)
             {
                 if (node.LeftNode == null)
