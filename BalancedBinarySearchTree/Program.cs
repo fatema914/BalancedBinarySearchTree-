@@ -16,7 +16,7 @@ namespace BinarySearchTree
         {
             root = null;
         }
-        public Node InsertNode(Node node)
+        public void InsertNode(Node node)
         {
             if (root == null)
             {
@@ -27,7 +27,6 @@ namespace BinarySearchTree
             {
                 root = InsertNodeRec(root, node.NodeValue);
             }
-            return root;
         }
         public Node InsertNodeRec(Node node, int data)
         {
@@ -35,12 +34,11 @@ namespace BinarySearchTree
             {
                 if (node.LeftNode == null)
                 {
-                    var leftNode = new Node
+                    node.LeftNode = new Node
                     {
                         NodeValue = data,
                         Height = 1
                     };
-                    node.LeftNode = leftNode;
                 }
                 else
                 {
@@ -51,12 +49,11 @@ namespace BinarySearchTree
             {
                 if (node.RigntNode == null)
                 {
-                    var rigntNode = new Node
+                    node.RigntNode = new Node
                     {
                         NodeValue = data,
                         Height = 1
                     };
-                    node.RigntNode = rigntNode;
                 }
                 else
                 {
@@ -64,7 +61,24 @@ namespace BinarySearchTree
                 }
             }
             node = CalculateHeightOfNode(node);
-            int heightDifference = GetHeightDiffOfChildNode(node);
+            node = CalculateHeightDiffAndRotateNode(node, data);
+            return node;
+        }
+        private Node CalculateHeightDiffAndRotateNode(Node node, int data)
+        {
+            int heightDifference = 0;
+            if (node.LeftNode != null && node.RigntNode == null)
+            {
+                heightDifference = node.LeftNode.Height;
+            }
+            else if (node.LeftNode == null && node.RigntNode != null)
+            {
+                heightDifference = -(node.RigntNode.Height);
+            }
+            else if (node.LeftNode != null && node.RigntNode != null)
+            {
+                heightDifference = node.LeftNode.Height - node.RigntNode.Height;
+            }
 
             if (heightDifference > 1)
             {
@@ -84,28 +98,13 @@ namespace BinarySearchTree
                     node = RightRotation(node);
                 }
                 else
+                {
                     node = RightLeftRotation(node);
+                }
             }
             return node;
         }
-        public int GetHeightDiffOfChildNode(Node node)
-        {
-            int heightDifference = 0;
-            if (node.LeftNode != null && node.RigntNode == null)
-            {
-                heightDifference = node.LeftNode.Height;
-            }
-            else if (node.LeftNode == null && node.RigntNode != null)
-            {
-                heightDifference = -(node.RigntNode.Height);
-            }
-            else if (node.LeftNode != null && node.RigntNode != null)
-            {
-                heightDifference = node.LeftNode.Height - node.RigntNode.Height;
-            }
-            return heightDifference;
-        }
-        public Node CalculateHeightOfNode(Node node)
+        private Node CalculateHeightOfNode(Node node)
         {
             if (node.LeftNode != null && node.RigntNode == null)
             {
@@ -134,7 +133,7 @@ namespace BinarySearchTree
             }
             return node;
         }
-        public Node RightRotation(Node node)
+        private Node RightRotation(Node node)
         {
             Node tempNode = node.RigntNode;
             node.RigntNode = tempNode.LeftNode;
@@ -142,7 +141,7 @@ namespace BinarySearchTree
             tempNode.LeftNode = CalculateHeightOfNode(tempNode.LeftNode);
             return tempNode;
         }
-        public Node LeftRotation(Node node)
+        private Node LeftRotation(Node node)
         {
             Node tempNode = node.LeftNode;
             node.LeftNode = tempNode.RigntNode;
@@ -150,7 +149,7 @@ namespace BinarySearchTree
             tempNode.RigntNode = CalculateHeightOfNode(tempNode.RigntNode);
             return tempNode;
         }
-        public Node LeftRightRotation(Node node)
+        private Node LeftRightRotation(Node node)
         {
             Node tempNode = node.LeftNode;
             node.LeftNode = RightRotation(tempNode);
@@ -158,7 +157,7 @@ namespace BinarySearchTree
             node = CalculateHeightOfNode(node);
             return node;
         }
-        public Node RightLeftRotation(Node node)
+        private Node RightLeftRotation(Node node)
         {
             Node tempNode = node.RigntNode;
             node.RigntNode = LeftRotation(tempNode);
@@ -181,10 +180,9 @@ namespace BinarySearchTree
             }
             return node;
         }
-        public Node DeleteNode(Node node)
+        public void DeleteNode(Node node)
         {
             root = DeleteNodeRec(root, node.NodeValue);
-            return root;
         }
         public Node DeleteNodeRec(Node node, int data)
         {
@@ -224,28 +222,7 @@ namespace BinarySearchTree
             if (node != null)
             {
                 node = CalculateHeightOfNode(node);
-                int heightDifference = GetHeightDiffOfChildNode(node);
-
-                if (heightDifference > 1)
-                {
-                    if (node.NodeValue < node.LeftNode.NodeValue)
-                    {
-                        node = LeftRotation(node);
-                    }
-                    else
-                    {
-                        node = LeftRightRotation(node);
-                    }
-                }
-                else if (heightDifference < -1)
-                {
-                    if (node.NodeValue > node.RigntNode.NodeValue)
-                    {
-                        node = RightRotation(node);
-                    }
-                    else
-                        node = RightLeftRotation(node);
-                }
+                node = CalculateHeightDiffAndRotateNode(node, node.NodeValue);
             }
             return node;
         }
