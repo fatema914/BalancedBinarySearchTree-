@@ -221,8 +221,8 @@ namespace BinarySearchTree
             }
             if (node != null)
             {
-                node = CalculateHeightOfNode(node);
-                node = CalculateHeightDiffAndRotateNode(node, node.NodeValue);
+                 CalculateHeightOfNode(node);
+                 CalculateHeightDiffAndRotateNode(node, node.NodeValue);
             }
             return node;
         }
